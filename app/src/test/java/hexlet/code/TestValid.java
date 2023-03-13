@@ -97,7 +97,33 @@ public class TestValid {
         assertThat(schema.isValid(data)).isTrue(); // true
 
 
+        MapSchema schemaMap = v.map();
 
+// shape - позволяет описывать валидацию для значений объекта Map по ключам.
+        Map<String, BaseSchema> schemas = new HashMap<>();
+        schemas.put("name", v.string().required());
+        schemas.put("age", v.number().positive());
+        schemaMap.shape(schemas);
+
+        Map<String, Object> human1 = new HashMap<>();
+        human1.put("name", "Kolya");
+        human1.put("age", 100);
+        assertThat(schemaMap.isValid(human1)).isTrue(); // true
+
+        Map<String, Object> human2 = new HashMap<>();
+        human2.put("name", "Maya");
+        human2.put("age", null);
+        assertThat(schemaMap.isValid(human2)).isTrue(); // true
+
+        Map<String, Object> human3 = new HashMap<>();
+        human3.put("name", "");
+        human3.put("age", null);
+        assertThat(schemaMap.isValid(human3)).isFalse(); // false
+
+        Map<String, Object> human4 = new HashMap<>();
+        human4.put("name", "Valya");
+        human4.put("age", -5);
+        assertThat(schemaMap.isValid(human4)).isFalse(); // false
     }
 
 

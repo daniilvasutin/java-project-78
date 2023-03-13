@@ -1,7 +1,5 @@
 package hexlet.code;
 
-import java.util.Objects;
-
 public abstract class BaseSchema {
 
     protected boolean required;
@@ -10,8 +8,9 @@ public abstract class BaseSchema {
         this.required = false;
     }
 
-    public void required() {
+    public BaseSchema required() {
         this.required = true;
+        return this;
     }
 
     public boolean isRequired() {
