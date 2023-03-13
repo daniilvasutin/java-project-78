@@ -3,6 +3,9 @@ package hexlet.code;
 import org.junit.jupiter.api.Test;
 
 //import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestValid {
@@ -27,7 +30,7 @@ public class TestValid {
 //    }
 
     @Test
-    public void testDiffJsonFormatStylish() throws Exception {
+    public void testDiffJsonFormatStylish() {
 
         Validator v = new Validator();
 
@@ -75,7 +78,31 @@ public class TestValid {
 
 
 
-// уже false, так как добавлена ещё одна проверка contains("whatthe")
+        MapSchema schema = v.map();
+
+        assertThat(schema.isValid(null)).isTrue(); // true
+
+        schema.required();
+
+        assertThat(schema.isValid(null)).isFalse(); // false
+        assertThat(schema.isValid(new HashMap())).isTrue(); // true
+        Map<String, String> data = new HashMap<>();
+        data.put("key1", "value1");
+        assertThat(schema.isValid(data)).isTrue(); // true
+
+        schema.sizeof(2);
+
+        assertThat(schema.isValid(data)).isFalse();  // false
+        data.put("key2", "value2");
+        assertThat(schema.isValid(data)).isTrue(); // true
+
+
+
+    }
+
+
+
+    // уже false, так как добавлена ещё одна проверка contains("whatthe")
 //
 //        String format = "stylish";
 //
@@ -85,7 +112,6 @@ public class TestValid {
 //        assertEquals(fileContent, Differ.generate(file1, file2));
 //        assertEquals(fileContent, resultOfDiff);
 //        assertThat(resultOfDiff).isEqualTo(fileContent);
-    }
 //
 //    @Test
 //    public void testDiffJsonFormatPlain() throws Exception {
