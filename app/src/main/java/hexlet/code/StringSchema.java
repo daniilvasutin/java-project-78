@@ -1,32 +1,27 @@
 package hexlet.code;
 
-public class StringSchema {
+public class StringSchema extends BaseSchema{
 
-    private boolean required;
     private String contains;
 
     public StringSchema() {
-        this.required = false;
+        super();
         this.contains = "";
     }
 
-    public boolean isValid(String str) {
-
-        if (!this.required) {
-            return true;
-        } else if (str == null || str.length() == 0) {
-            return false;
-        } else if (str.length() > 0) {
+    public boolean isValid(Object o) {
+        String str = String.valueOf(o);
+        if (!super.isRequired()) {
+            if (str.equals("null") || str.length() == 0) {
+                return true;
+            }
+        }else if (!str.equals("null") && str.length() > 0 && str.contains(this.contains)) {
             return true;
         }
         return false;
     }
     public boolean isValid(int number) {
         return false;
-    }
-
-    public void required() {
-        this.required = true;
     }
 
     public StringSchema contains(String str) {

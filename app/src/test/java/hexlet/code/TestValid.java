@@ -31,25 +31,50 @@ public class TestValid {
 
         Validator v = new Validator();
 
-        StringSchema schema = v.string();
+        StringSchema schemaString = v.string();
 
-        assertThat(schema.isValid("")).isTrue(); // true
+        assertThat(schemaString.isValid("")).isTrue(); // true
         // Пока на вызван метод required(), null считается валидным
-        assertThat(schema.isValid(null)).isTrue(); // true
+        assertThat(schemaString.isValid(null)).isTrue(); // true
 
-        schema.required();
+        schemaString.required();
 
-        assertThat(schema.isValid("what does the fox say")).isTrue(); // true
-        assertThat(schema.isValid("hexlet")).isTrue(); // true
-        assertThat(schema.isValid(null)).isFalse(); // false
-        assertThat(schema.isValid(5)).isFalse(); // false
-        assertThat(schema.isValid("")).isFalse(); // false
+        assertThat(schemaString.isValid("what does the fox say")).isTrue(); // true
+        assertThat(schemaString.isValid("hexlet")).isTrue(); // true
+        assertThat(schemaString.isValid(null)).isFalse(); // false
+        assertThat(schemaString.isValid(5)).isFalse(); // false
+        assertThat(schemaString.isValid("")).isFalse(); // false
 
-        schema.contains("wh").isValid("what does the fox say"); // true
-        schema.contains("what").isValid("what does the fox say"); // true
-        schema.contains("whatthe").isValid("what does the fox say"); // false
+        assertThat(schemaString.contains("wh").isValid("what does the fox say")).isTrue(); // true
+        assertThat(schemaString.contains("what").isValid("what does the fox say")).isTrue(); // true
+        assertThat(schemaString.contains("whatthe").isValid("what does the fox say")).isFalse(); // false
 
-//        schema.isValid("what does the fox say"); // false
+        assertThat(schemaString.isValid("what does the fox say")).isFalse(); // false
+
+
+        NumberSchema schemaNumber = v.number();
+        // Пока не вызван метод required(), null считается валидным
+        assertThat(schemaNumber.isValid(null)).isTrue(); // true
+        assertThat(schemaNumber.positive().isValid(null)).isTrue(); // true
+
+        schemaNumber.required();
+
+        assertThat(schemaNumber.isValid(null)).isFalse(); // false
+        assertThat(schemaNumber.isValid(10)).isTrue(); // true
+        assertThat(schemaNumber.isValid("5")).isFalse(); // false
+        assertThat(schemaNumber.isValid(-10)).isFalse(); // false
+//  Ноль - не положительное число
+        assertThat(schemaNumber.isValid(0)).isFalse(); // false
+
+        schemaNumber.range(5, 10);
+
+        assertThat(schemaNumber.isValid(5)).isTrue(); // true
+        assertThat(schemaNumber.isValid(10)).isTrue(); // true
+        assertThat(schemaNumber.isValid(4)).isFalse(); // false
+        assertThat(schemaNumber.isValid(11)).isFalse(); // false
+
+
+
 // уже false, так как добавлена ещё одна проверка contains("whatthe")
 //
 //        String format = "stylish";
