@@ -9,6 +9,11 @@ public class StringSchema extends BaseSchema{
         this.contains = "";
     }
 
+    public StringSchema required() {
+        super.required = true;
+        return this;
+    }
+
     public boolean isValid(Object o) {
         String str = String.valueOf(o);
         if (!super.isRequired()) {

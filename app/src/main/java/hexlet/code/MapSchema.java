@@ -36,8 +36,8 @@ public class MapSchema extends BaseSchema{
                 //boolean flag = false;
                 if (map.size() > 0 && mapSchema != null) {
                     for (var item : map.entrySet()) {
-                        BaseSchema schema= (BaseSchema) mapSchema.get(item.getKey());
-                        if (!schema.isValid(item.getValue())) {
+                        BaseSchema schema = (BaseSchema) mapSchema.get(item.getKey());
+                        if (schema == null || !schema.isValid(item.getValue())) {
                             return false;
                             //flag = true;
                         }

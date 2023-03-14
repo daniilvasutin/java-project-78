@@ -23,6 +23,11 @@ public class NumberSchema extends BaseSchema{
         return this;
     }
 
+    public NumberSchema required() {
+        super.required = true;
+        return this;
+    }
+
     public boolean isPositive() {
         return positive;
     }
