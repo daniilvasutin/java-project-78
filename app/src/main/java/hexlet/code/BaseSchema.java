@@ -6,15 +6,15 @@ import java.util.function.Predicate;
 
 public class BaseSchema {
 
-    public void setRequired(boolean required) {
-        this.required = required;
-    }
-
     protected boolean required;
-    protected List<Predicate> predicates = new ArrayList<>();
+    private final List<Predicate> predicates = new ArrayList<>();
 
     public void addPredicate(Predicate predicate) {
         predicates.add(predicate);
+    }
+
+    public void setRequired(boolean required) {
+        this.required = required;
     }
 
     public BaseSchema() {
@@ -34,7 +34,7 @@ public class BaseSchema {
 
         if (!isRequired() && (value == null || value.equals(""))) {
             return true;
-        }else if (isRequired() && (value == null || value.equals(""))) {
+        } else if (isRequired() && (value == null || value.equals(""))) {
             return false;
         } else {
             for (var predicate: predicates) {

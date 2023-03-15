@@ -2,9 +2,7 @@ package hexlet.code;
 
 import java.util.function.Predicate;
 
-public class StringSchema extends BaseSchema{
-
-    private String contains;
+public class StringSchema extends BaseSchema {
 
     public StringSchema() {
         Predicate<Object> isString = x -> x instanceof String;
