@@ -28,9 +28,9 @@ public class BaseSchema {
 
     public final boolean isValid(Object value) {
 
-        if (!isRequired() && (value == null || value.equals(""))) {
+        if (!isRequired() && isNullOrEmpty(value)) {
             return true;
-        } else if (isRequired() && (value == null || value.equals(""))) {
+        } else if (isRequired() && isNullOrEmpty(value)) {
             return false;
         } else {
             for (var predicate: predicates) {
@@ -40,6 +40,10 @@ public class BaseSchema {
             }
         }
         return true;
+    }
+
+    public final boolean isNullOrEmpty(Object value) {
+        return value == null || value.equals("");
     }
 }
 
