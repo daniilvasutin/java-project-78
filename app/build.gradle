@@ -16,7 +16,7 @@ jacocoTestReport {
     reports {
         xml.required = true
         csv.required = true
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml2')
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
 
@@ -31,7 +31,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testImplementation 'org.assertj:assertj-core:3.11.1'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
 }
 
 test {
