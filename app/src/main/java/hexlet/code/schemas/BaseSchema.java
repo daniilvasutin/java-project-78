@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 
 public class BaseSchema {
 
-    protected boolean required;
+    private boolean required;
     private final List<Predicate> predicates;
 
     public final void addPredicate(Predicate predicate) {
@@ -27,7 +27,7 @@ public class BaseSchema {
         return this;
     }
 
-    public boolean isRequired() {
+    public final boolean isRequired() {
         return this.required;
     }
 
