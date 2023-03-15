@@ -9,11 +9,11 @@ public class BaseSchema {
     protected boolean required;
     private final List<Predicate> predicates;
 
-    public void addPredicate(Predicate predicate) {
+    public final void addPredicate(Predicate predicate) {
         predicates.add(predicate);
     }
 
-    public void setRequired(boolean required) {
+    public final void setRequired(boolean required) {
         this.required = required;
     }
 
@@ -31,7 +31,7 @@ public class BaseSchema {
         return this.required;
     }
 
-    public boolean isValid(Object value) {
+    public final boolean isValid(Object value) {
 
         if (!isRequired() && (value == null || value.equals(""))) {
             return true;
