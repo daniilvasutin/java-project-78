@@ -1,62 +1,38 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class MapSchema extends BaseSchema{
 
-    private Map mapSchema;
-    private int sizeOf;
-    private boolean setSizeOf;
-
     public MapSchema() {
-        this.mapSchema = null;
-        this.setSizeOf = false;
-        this.sizeOf = 0;
-    }
-
-    public boolean isSizeOf() {
-        return setSizeOf;
-    }
-
-    @Override
-    public boolean isValid(Object o) {
-        if (!super.isRequired() && o == null) {
-                return true;
-        }
-        if (o instanceof HashMap<?,?>) {
-            if (isSizeOf() && ((HashMap<?, ?>) o).size() == sizeOf) {
-                return true;
-            } else if (!isSizeOf()) {
-                ObjectMapper objectMapper = new ObjectMapper();
-                Map<String, Object> map = objectMapper.convertValue(o, new TypeReference<>() {});
-                //boolean flag = false;
-                if (map.size() > 0 && mapSchema != null) {
-                    for (var item : map.entrySet()) {
-                        BaseSchema schema = (BaseSchema) mapSchema.get(item.getKey());
-                        if (schema == null || !schema.isValid(item.getValue())) {
-                            return false;
-                            //flag = true;
-                        }
-                    }
-                }
-                return true;
-            }
-        }
-        return false;
+        Predicate<Object> predicate = x -> x instanceof Map;
+        addPredicate(predicate);
     }
 
     public void sizeof(int size) {
-        this.sizeOf = size;
-        this.setSizeOf = true;
+        Predicate<Map<String, Object>> predicate = x -> x.size() == size;
+        addPredicate(predicate);
+    }
+
+    public MapSchema required() {
+        setRequired(true);
+        return this;
     }
 
     public void shape(Map<String, BaseSchema> schemas) {
-        this.mapSchema = schemas;
+        Predicate<Map<String, Object>> shape = map -> checkValue(schemas, map);
+        addPredicate(shape);
     }
 
-
+    private boolean checkValue(Map<String, BaseSchema> schemas, Map<String, Object> map) {
+        for (var item : schemas.entrySet()) {
+            var schema = item.getValue();
+            var valueFromMap = map.get(item.getKey());
+            if (!schema.isValid(valueFromMap)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

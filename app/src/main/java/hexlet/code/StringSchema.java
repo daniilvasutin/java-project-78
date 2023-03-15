@@ -1,36 +1,30 @@
 package hexlet.code;
 
+import java.util.function.Predicate;
+
 public class StringSchema extends BaseSchema{
 
     private String contains;
 
     public StringSchema() {
-        super();
-        this.contains = "";
+        Predicate<Object> isString = x -> x instanceof String;
+        addPredicate(isString);
     }
 
     public StringSchema required() {
-        super.required = true;
+        setRequired(true);
         return this;
     }
 
-    public boolean isValid(Object o) {
-        String str = String.valueOf(o);
-        if (!super.isRequired()) {
-            if (str.equals("null") || str.length() == 0) {
-                return true;
-            }
-        }else if (!str.equals("null") && str.length() > 0 && str.contains(this.contains)) {
-            return true;
-        }
-        return false;
-    }
-    public boolean isValid(int number) {
-        return false;
+    public StringSchema contains(String str) {
+        Predicate<String> contains = x -> x.contains(str);
+        addPredicate(contains);
+        return this;
     }
 
-    public StringSchema contains(String str) {
-        this.contains = str;
+    public StringSchema minLength(int length) {
+        Predicate<String> minLength = x -> x.length() >= length;
+        addPredicate(minLength);
         return this;
     }
 
