@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.schemas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 public class BaseSchema {
 
     protected boolean required;
-    private final List<Predicate> predicates = new ArrayList<>();
+    private final List<Predicate> predicates;
 
     public void addPredicate(Predicate predicate) {
         predicates.add(predicate);
@@ -19,6 +19,7 @@ public class BaseSchema {
 
     public BaseSchema() {
         this.required = false;
+        predicates = new ArrayList<>();
     }
 
     public BaseSchema required() {
