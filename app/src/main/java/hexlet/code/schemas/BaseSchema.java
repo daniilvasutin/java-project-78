@@ -14,11 +14,11 @@ public abstract class BaseSchema {
 
     public final boolean isValid(Object value) {
 
-            for (var predicate: predicates) {
-                if (!predicate.test(value)) {
-                    return false;
-                }
+        for (var predicate: predicates) {
+            if (!predicate.test(value)) {
+                return false;
             }
+        }
         return true;
     }
 }

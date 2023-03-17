@@ -8,8 +8,8 @@ public final class StringSchema extends BaseSchema {
         Predicate<Object> isString = x -> x instanceof String;
         addPredicate(isString);
 
-        Predicate<Object> NotNullNotEmpty = x -> x != null && !x.equals("");
-        addPredicate(NotNullNotEmpty);
+        Predicate<Object> notNullNotEmpty = x -> x != null && !x.equals("");
+        addPredicate(notNullNotEmpty);
         return this;
     }
 
