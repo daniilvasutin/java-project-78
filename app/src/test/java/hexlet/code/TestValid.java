@@ -49,6 +49,7 @@ public class TestValid {
         assertThat(schema.positive().isValid(null)).isTrue();
 
         schema.required();
+
         assertThat(schema.isValid(10)).isTrue();
         assertThat(schema.isValid(null)).isFalse();
         assertThat(schema.isValid("5")).isFalse();

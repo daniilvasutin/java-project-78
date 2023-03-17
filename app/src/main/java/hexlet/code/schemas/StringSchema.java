@@ -4,13 +4,12 @@ import java.util.function.Predicate;
 
 public final class StringSchema extends BaseSchema {
 
-    public StringSchema() {
+    public StringSchema required() {
         Predicate<Object> isString = x -> x instanceof String;
         addPredicate(isString);
-    }
 
-    public StringSchema required() {
-        setRequired(true);
+        Predicate<Object> NotNullNotEmpty = x -> x != null && !x.equals("");
+        addPredicate(NotNullNotEmpty);
         return this;
     }
 
